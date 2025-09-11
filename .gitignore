@@ -1,0 +1,63 @@
+# VS Code
+.vscode/
+*.code-workspace
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+
+# Kubernetes
+kubeconfig
+*.kubeconfig
+
+# Secrets
+*.pem
+*.key
+secrets.yaml
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# AWS
+.aws/credentials
+.aws/config
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+pip-log.txt
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDEs
+.idea/
+*.iml

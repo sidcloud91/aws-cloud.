@@ -1,0 +1,77 @@
+# Pre-commit hooks configuration for enterprise security and code quality
+# See https://pre-commit.com for more information
+
+repos:
+  # Built-in hooks for basic file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-symlinks
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: detect-private-key
+      - id: check-executables-have-shebangs
+
+  # Detect secrets using detect-secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: |
+          (?x)^(
+            .*\.lock$|
+            .*\.tfstate$|
+            .*\.tfstate\.backup$|
+            .*\.terraform/.*$|
+            .git/.*$
+          )$
+
+  # Git-secrets integration (local hook)
+  - repo: local
+    hooks:
+      - id: git-secrets
+        name: git-secrets
+        entry: git-secrets --scan
+        language: system
+        types: [text]
+
+  # Terraform hooks for validation and security
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.99.0
+    hooks:
+      - id: terraform_fmt
+        args:
+          - --args=-recursive
+      # - id: terraform_validate  # Commented out due to provider initialization issues
+
+# Global configuration
+exclude: |
+  (?x)^(
+    .*\.tfstate$|
+    .*\.tfstate\.backup$|
+    .*\.terraform/.*$|
+    .*\.terraform\.lock\.hcl$|
+    .git/.*$|
+    .*\.zip$|
+    .*\.tar\.gz$|
+    .*\.pkg$
+  )$
+
+# Fail fast - stop running hooks after first failure
+fail_fast: true
+
+# Default language version for hooks
+default_language_version:
+  python: python3
+
+# Minimum pre-commit version
+minimum_pre_commit_version: 3.0.0

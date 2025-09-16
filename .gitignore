@@ -71,10 +71,7 @@ application-secrets.*
 *.tfplan.*
 terraform.tfvars
 dev.tfvars
-!terraform.tfvars.example
-!dev.tfvars.example
-!staging.tfvars.example
-!prod.tfvars.example
+*.tfvars.example
 override.tf
 override.tf.json
 *_override.tf
